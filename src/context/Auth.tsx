@@ -43,6 +43,8 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
             const user: User = JSON.parse(String(await getItem("@user")));
             navigate("/dashboard/transaction");
             setUser(user);
+          } else {
+            setUser(null);
           }
         })
         .catch(() => {
@@ -53,7 +55,7 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
     };
 
     validateToken();
-  }, [setUser]);
+  }, [navigate, setUser]);
 
   const singIn = async (credentials: LoginRequest) => {
     const { user, token } = (await singInService(credentials)).data;

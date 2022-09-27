@@ -2,7 +2,8 @@ import axios from "axios";
 import { getItem } from "../utils/asyncStorage";
 
 const Api = axios.create({
-  baseURL: "https://fifa-trade-brasil-api.herokuapp.com",
+  baseURL: "http://localhost:8080",
+  // baseURL: "https://fifa-trade-brasil-api.herokuapp.com",
 });
 
 Api.interceptors.request.use(async (config) => {

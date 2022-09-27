@@ -60,19 +60,19 @@ export const Transaction = () => {
   const [fileSelected, setFileSelected] = useState<File>();
   const [viewModal, setViewModal] = useState<boolean>(false);
 
+  const getCustomers = async () => {
+    const { customers } = await (await Api.get(`/v1/csv/find-many`)).data;
+
+    if (customers) {
+      setCustomers(customers);
+      setLoading(true);
+    } else {
+      setCustomers([]);
+      setLoading(true);
+    }
+  };
+
   useEffect(() => {
-    const getCustomers = async () => {
-      const { customers } = await (await Api.get(`/v1/csv/find-many`)).data;
-
-      if (customers) {
-        setCustomers(customers);
-        setLoading(true);
-      } else {
-        setCustomers([]);
-        setLoading(true);
-      }
-    };
-
     getCustomers();
   }, [setCustomers]);
 
@@ -98,6 +98,8 @@ export const Transaction = () => {
           progress: undefined,
           isLoading: false,
         });
+
+        getCustomers();
       })
       .catch((error) => {
         toast.update(toastUpload, {
@@ -251,54 +253,61 @@ export const Transaction = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {customers
-                      ?.filter(
-                        (customer) =>
-                          sanitizeString(customer.supporter.name).includes(
-                            termSearched,
-                          ) ||
-                          sanitizeString(customer.supporter.cpfOrCnpj).includes(
-                            termSearched,
-                          ) ||
-                          sanitizeString(
-                            customer.payment.supportCompetence,
-                          ).includes(termSearched),
-                      )
-                      .map((customer) => (
-                        <tr
-                          key={customer.apoiaseID}
-                          onClick={() => {
-                            setCustomer(customer);
-                            setViewModal(true);
-                          }}
-                        >
-                          <td>{converterName(customer.supporter.name)}</td>
-                          <td>{customer.supporter.email}</td>
-                          <td>
-                            <span className="amount">
-                              {currency(customer.payment.amount)}
-                            </span>
-                          </td>
-                          <td>
-                            {converterDatePayment(
+                    {customers.length > 0 ? (
+                      customers
+                        ?.filter(
+                          (customer) =>
+                            sanitizeString(customer.supporter.name).includes(
+                              termSearched,
+                            ) ||
+                            sanitizeString(
+                              customer.supporter.cpfOrCnpj,
+                            ).includes(termSearched) ||
+                            sanitizeString(
                               customer.payment.supportCompetence,
-                            )}
-                          </td>
-                          <td>{customer.apoiaseID}</td>
-                          <td>
-                            {sanitizeString(customer.payment.statusPayment) ===
-                            sanitizeString("Pago") ? (
-                              <span className="paid">
-                                {customer.payment.statusPayment}
+                            ).includes(termSearched),
+                        )
+                        .map((customer) => (
+                          <tr
+                            key={customer.apoiaseID}
+                            onClick={() => {
+                              setCustomer(customer);
+                              setViewModal(true);
+                            }}
+                          >
+                            <td>{converterName(customer.supporter.name)}</td>
+                            <td>{customer.supporter.email}</td>
+                            <td>
+                              <span className="amount">
+                                {currency(customer.payment.amount)}
                               </span>
-                            ) : (
-                              <span className="pending">
-                                {customer.payment.statusPayment}
-                              </span>
-                            )}
-                          </td>
-                        </tr>
-                      ))}
+                            </td>
+                            <td>
+                              {converterDatePayment(
+                                customer.payment.supportCompetence,
+                              )}
+                            </td>
+                            <td>{customer.apoiaseID}</td>
+                            <td>
+                              {sanitizeString(
+                                customer.payment.statusPayment,
+                              ) === sanitizeString("Pago") ? (
+                                <span className="paid">
+                                  {customer.payment.statusPayment}
+                                </span>
+                              ) : (
+                                <span className="pending">
+                                  {customer.payment.statusPayment}
+                                </span>
+                              )}
+                            </td>
+                          </tr>
+                        ))
+                    ) : (
+                      <td colSpan={5}>
+                        <b>Não há dados cadastrados!</b>
+                      </td>
+                    )}
                   </tbody>
                   {/* <tfoot>
                 <tr>
