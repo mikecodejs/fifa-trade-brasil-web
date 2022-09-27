@@ -1,0 +1,109 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #222f3e;
+}
+
+.login {
+  padding: 40px;
+  border-radius: 10px;
+  background-color: #576574;
+}
+
+form header .logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+form header .logo img {
+  display: block;
+  margin: 10px auto;
+  margin-right: 15px;
+  width: 50px;
+}
+
+form header .logo h1 {
+  color: white;
+}
+
+form header .description {
+  margin-bottom: 20px;
+}
+
+form header .description h2 {
+  color: white;
+}
+
+form header .description h4 {
+  color: white;
+}
+
+.form-group {
+  width: 100%;
+}
+
+.form-group small {
+  margin-bottom: 10px;
+  display: block;
+  font-size: 12pt;
+  font-weight: bold;
+  color: white;
+}
+
+.form-group input {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 15px 0;
+  border: none;
+  font-size: 12pt;
+  background-color: unset;
+  border-bottom: 3px solid white;
+  color: white;
+  outline: none;
+}
+
+.form-group input::placeholder {
+  color: rgb(245, 245, 245, 0.8);
+}
+
+.sing-up {
+  width: 100%;
+  padding: 10px 0;
+  text-align: right;
+}
+
+.sing-up a {
+  font-weight: bold;
+  color: white;
+}
+
+.sing-up a:hover {
+  text-decoration: underline;
+}
+
+form button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 15px;
+  border: none;
+  font-size: 12pt;
+  background-color: #3742fa;
+  cursor: pointer;
+  border-radius: 10px;
+  font-weight: bold;
+  color: white;
+}
+
+form button:hover {
+  background-color: #5352ed;
+}
+
+@media all and (max-width: 640px) {
+  .login {
+    width: calc(100% - 20px);
+  }
+}

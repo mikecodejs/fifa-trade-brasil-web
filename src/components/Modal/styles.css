@@ -1,0 +1,54 @@
+.modal-container {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(34, 47, 62, 0.6);
+}
+
+.modal-close {
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+  border: none;
+  font-size: 12pt;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: #ff4757;
+  color: white;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.modal-close:hover {
+  background-color: #ff6b81;
+}
+
+.modal-table {
+  width: 75%;
+  background-color: white;
+}
+
+.modal-table table {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.modal-table table td,
+.modal-table table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  white-space: nowrap;
+}
+
+.modal-table table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #222f3e;
+  color: white;
+}
