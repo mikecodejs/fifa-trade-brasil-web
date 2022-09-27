@@ -141,6 +141,18 @@ body {
   cursor: pointer;
 }
 
+.table table td .clipboard-telephone {
+  border: none;
+  background-color: unset;
+  font-size: 12pt;
+  color: white;
+  cursor: pointer;
+}
+
+.table table td .clipboard-telephone:hover {
+  text-decoration: underline;
+}
+
 .table table tbody tr:hover {
   background-color: #a4b0be;
 }

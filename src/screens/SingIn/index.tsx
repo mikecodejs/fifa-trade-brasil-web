@@ -28,7 +28,7 @@ export const SingIn = () => {
       .catch((error) => {
         toast.error(error.response.data.error, {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,

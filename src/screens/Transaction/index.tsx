@@ -90,7 +90,7 @@ export const Transaction = () => {
           render: data.message,
           type: "success",
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -106,7 +106,7 @@ export const Transaction = () => {
           render: error.response.data.error,
           type: "error",
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -122,7 +122,7 @@ export const Transaction = () => {
       if (ev.currentTarget.files[0].type !== "text/csv") {
         return toast.error("O arquivo espera deve ter a extensão .csv", {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -134,6 +134,27 @@ export const Transaction = () => {
         setFileSelected(ev.currentTarget.files[0]);
       }
     }
+  };
+
+  const handleTelephone = (
+    ev: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    ev.preventDefault();
+
+    const telephone = String(ev.currentTarget.textContent);
+
+    toast.info(`Número de telefone copiado ${telephone}`, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      isLoading: false,
+    });
+
+    navigator.clipboard.writeText(telephone);
   };
 
   return (
@@ -189,7 +210,7 @@ export const Transaction = () => {
         <div className="container">
           <ToastContainer
             position="top-right"
-            autoClose={5000}
+            autoClose={2000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
@@ -246,6 +267,7 @@ export const Transaction = () => {
                     <tr>
                       <th>Apoiador</th>
                       <th>E-mail</th>
+                      <th>Telefone</th>
                       <th>Valor</th>
                       <th>Pago em</th>
                       <th>Transação ID</th>
@@ -257,26 +279,34 @@ export const Transaction = () => {
                       customers
                         ?.filter(
                           (customer) =>
-                            sanitizeString(customer.supporter.name).includes(
-                              termSearched,
-                            ) ||
-                            sanitizeString(
-                              customer.supporter.cpfOrCnpj,
-                            ).includes(termSearched) ||
-                            sanitizeString(
-                              customer.payment.supportCompetence,
-                            ).includes(termSearched),
+                            customer.supporter.name
+                              .toLowerCase()
+                              .includes(termSearched.toLowerCase()) ||
+                            customer.supporter.cpfOrCnpj
+                              .toLowerCase()
+                              .includes(termSearched.toLowerCase()) ||
+                            customer.payment.supportCompetence
+                              .toLowerCase()
+                              .includes(termSearched.toLowerCase()),
                         )
                         .map((customer) => (
                           <tr
                             key={customer.apoiaseID}
-                            onClick={() => {
+                            onDoubleClick={() => {
                               setCustomer(customer);
                               setViewModal(true);
                             }}
                           >
                             <td>{converterName(customer.supporter.name)}</td>
                             <td>{customer.supporter.email}</td>
+                            <td>
+                              <button
+                                className="clipboard-telephone"
+                                onClick={(ev) => handleTelephone(ev)}
+                              >
+                                {customer.supporter.telephone}
+                              </button>
+                            </td>
                             <td>
                               <span className="amount">
                                 {currency(customer.payment.amount)}

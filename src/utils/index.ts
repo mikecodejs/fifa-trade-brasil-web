@@ -10,6 +10,7 @@ export const sanitizeString = (str: string) => str.trim().toLowerCase();
 export const converterMethodPayment = (str: string): string => {
   const methods: Record<string, unknown> = {
     credit_card: "Cartão de crédito",
+    barcode: "Boleto",
   };
 
   return methods[str] as string;
