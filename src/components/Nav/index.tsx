@@ -7,10 +7,24 @@ import {
   faWallet
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
 import logo from "../../assets/imgs/logo.png";
+import { User } from "../../services/auth.service";
+import { getItem } from "../../utils/asyncStorage";
 import "./styles.css";
 
 export const Nav = () => {
+  const [profile, setProfile] = useState<User>({} as User);
+
+  useEffect(() => {
+    const getProfile = async () => {
+      const user = JSON.parse((await getItem("@user")) as string);
+      setProfile(user);
+    };
+
+    getProfile();
+  }, [profile, setProfile]);
+
   return (
     <div className="nav-container">
       <nav>
@@ -60,6 +74,11 @@ export const Nav = () => {
             </a>
           </li>
         </ul>
+        <div className="profile">
+          <h6>Bem vindo 😁</h6>
+          <h4>{profile.name}</h4>
+          <h5>{profile.email}</h5>
+        </div>
       </nav>
     </div>
   );

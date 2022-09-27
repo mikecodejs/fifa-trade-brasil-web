@@ -28,6 +28,8 @@
 }
 
 .modal-table {
+  padding: 10px;
+  border-radius: 10px;
   width: 75%;
   background-color: white;
 }

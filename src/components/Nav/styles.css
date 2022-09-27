@@ -28,6 +28,10 @@ nav {
   color: white;
 }
 
+nav {
+  position: relative;
+}
+
 nav ul {
   margin-top: 30px;
   list-style-type: none;
@@ -54,6 +58,25 @@ nav ul li a i {
 
 nav ul li a span {
   float: right;
+}
+
+nav .profile {
+  width: 100%;
+  padding: 20px;
+  position: absolute;
+  bottom: 0;
+  background-color: #a4b0be;
+  border-radius: 0 0 12px 12px;
+}
+
+nav .profile h4,
+nav .profile h5,
+nav .profile h6 {
+  color: #fff;
+}
+
+nav .profile h5 {
+  font-weight: normal;
 }
 
 @media all and (max-width: 1024px) {
@@ -85,6 +108,10 @@ nav ul li a span {
   }
 
   nav ul li a span {
+    display: none;
+  }
+
+  nav .profile {
     display: none;
   }
 }
